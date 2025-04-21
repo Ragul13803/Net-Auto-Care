@@ -1,5 +1,5 @@
 import { useLocation } from 'react-router-dom';
-import { Box, Typography, Divider, List, ListItem, ListItemText, CircularProgress, Paper } from '@mui/material';
+import { Box, Typography, Divider, CircularProgress, Paper } from '@mui/material';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 
@@ -67,62 +67,56 @@ const DetailsViewBill = () => {
   }
 
   return (
-    <>
-    <Paper sx={{ p: 2 , m: 2, width: '900px'}}>
+    <Paper sx={{ p: 3, m: 2, width: '100%', maxWidth: '900px', mx: 'auto', boxShadow: 4 }}>
       <Typography variant="h5" sx={{ mb: 2, fontWeight: 'bold' }}>Bill Details</Typography>
-      <Box sx={{ display: 'flex', justifyContent: 'space-between'}}>
-        <Box sx={{ textAlign: 'left' }}>
-          <Typography variant='h6'><strong>Customer Name:</strong> {bill.customer_name}</Typography>
-          <Typography variant='h6'><strong>Mobile:</strong> {bill.mobile}</Typography>
-          <Typography variant='h6'><strong>Vehicle Name:</strong> {bill.vehicle_name}</Typography>
-          <Typography variant='h6'><strong>Vehicle Number:</strong>{bill.vehicle_number}</Typography>
+
+      <Box sx={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: 2 }}>
+        <Box sx={{ minWidth: '40%' }}>
+          <Typography><strong>Customer Name:</strong> {bill.customer_name}</Typography>
+          <Typography><strong>Mobile:</strong> {bill.mobile}</Typography>
+          <Typography><strong>Vehicle Name:</strong> {bill.vehicle_name}</Typography>
+          <Typography><strong>Vehicle Number:</strong> {bill.vehicle_number}</Typography>
         </Box>
 
-        <Box sx={{ textAlign: 'right' }}>
-          <Typography variant='h6'><strong>Bill No:</strong> {bill.BillNo}</Typography>
-          <Typography variant='h6'><strong>Bill Date:</strong> {new Date(bill.bill_date).toLocaleDateString()}</Typography>
-          <Typography variant='h6'><strong>Status:</strong> {bill.bill_status === 'U' ? 'Unpaid' : 'Completed'}</Typography>
-          <Typography variant='h6'><strong>Total Payable:</strong> ₹{bill.TotalPayable}</Typography>
-          <Typography variant='h6'><strong>Amount Paid:</strong> ₹{bill.AmountPaid}</Typography>
+        <Box sx={{ minWidth: '40%', textAlign: { xs: 'left', sm: 'right' } }}>
+          <Typography><strong>Bill No:</strong> {bill.BillNo}</Typography>
+          <Typography><strong>Bill Date:</strong> {new Date(bill.bill_date).toLocaleDateString()}</Typography>
+          <Typography><strong>Status:</strong> {bill.bill_status === 'U' ? 'Unpaid' : 'Completed'}</Typography>
+          <Typography><strong>Total Payable:</strong> ₹{bill.TotalPayable}</Typography>
+          <Typography><strong>Amount Paid:</strong> ₹{bill.AmountPaid}</Typography>
         </Box>
       </Box>
-      <Divider sx={{ my: 2 }} />
 
-      <Typography variant="h5" sx={{ mb: 1 }}>Spare Items</Typography>
-      <List>
-        {bill.spare_items?.length > 0 ? (
-          bill.spare_items.map((item: any) => (
-            <ListItem key={item.ID} sx={{ px: 0 }}>
-              <ListItemText
-                primary={item.spare_item}
-                secondary={`Quantity: ${item.quantity}, Amount: ₹${item.amount}`}
-              />
-            </ListItem>
-          ))
-        ) : (
-          <Typography>No spare items found.</Typography>
-        )}
-      </List>
+      <Divider sx={{ my: 3 }} />
 
-      {/* Optional: Transactions section */}
+      <Typography variant="h6" sx={{ mb: 1 }}>Spare Items</Typography>
+      {bill.spare_items?.length > 0 ? (
+        <Box sx={{ pl: 1 }}>
+          {bill.spare_items.map((item: any, index: number) => (
+            <Typography key={item.ID || index} sx={{ mb: 0.5 }}>
+              • <strong>{item.spare_item}</strong>
+               — Quantity: {item.quantity}, Amount: ₹{item.amount}
+            </Typography>
+          ))}
+        </Box>
+      ) : (
+        <Typography>No spare items found.</Typography>
+      )}
+
       {bill.transactions?.length > 0 && (
         <>
           <Divider sx={{ my: 3 }} />
           <Typography variant="h6" sx={{ mb: 1 }}>Transactions</Typography>
-          <List>
-            {bill.transactions.map((txn: any, idx: number) => (
-              <ListItem key={idx} sx={{ px: 0 }}>
-                <ListItemText
-                  primary={`Amount: ₹${txn.AmountPaid}`}
-                  secondary={`Date: ${txn.TransactionDate}`}
-                />
-              </ListItem>
+          <Box sx={{ pl: 1 }}>
+            {bill.transactions.map((txn: any, index: number) => (
+              <Typography key={index} sx={{ mb: 0.5 }}>
+                • <strong>₹{txn.AmountPaid}</strong> on {new Date(txn.TransactionDate).toLocaleDateString()}
+              </Typography>
             ))}
-          </List>
+          </Box>
         </>
       )}
     </Paper>
-    </>
   );
 };
 
