@@ -13,7 +13,7 @@ const CompletedBills = () => {
 
   const token = sessionStorage.getItem("access_token"); // Retrieve token from sessionStorage
 
-  const getBills = async () => {
+  const fetchCompletedBills = async () => {
     try {
       if (!token) {
         setError("No access token found. Please log in.");
@@ -41,12 +41,12 @@ const CompletedBills = () => {
   };
 
   useEffect(() => {
-    getBills(); // Fetch the bills when the component mounts
+    fetchCompletedBills(); 
   }, []);
 
   if (loading) {
     return (
-      <Box sx={{ display: "flex", justifyContent: "center", alignItems: 'center', height: "100vh", width: "100vw",}}>
+      <Box sx={{ display: "flex", justifyContent: "center", alignItems: 'center', width: '76vw', mt:"60px" }}>
         <CircularProgress size={30} sx={{ color: "#3F7D58", mr: "10px" }} />
         <Typography variant="h5">Loading...</Typography>
       </Box>
@@ -62,7 +62,7 @@ const CompletedBills = () => {
   }
 
   return (
-    <Box sx={{ height: "100vh", width: '100vw'}}>
+    <Box sx={{ }}>
       {bills.length === 0 ? ( <Typography>No completed bills found.</Typography> ) : (
         <Grid container spacing={2}>
           {bills.map((bill: any) => (
@@ -75,16 +75,16 @@ const CompletedBills = () => {
                     boxShadow: "0 8px 16px rgba(0, 0, 0, 0.2)",
                   },
                   bgcolor: "#3F7D58",
-                  width: "220px",
+                  width: '220px',
                   transition: "box-shadow 0.3s ease-in-out",
                   cursor: 'pointer',
                 }}
               >
                 <CardContent
                   sx={{
-                    p: "12px !important",
+                    p: "10px !important",
                     "&:last-child": {
-                      pb: "12px !important",
+                      pb: "10px !important",
                     },
                   }}
                 >
@@ -114,23 +114,40 @@ const CompletedBills = () => {
                           display: "flex",
                           flexDirection: "column",
                           alignItems: "center",
-                          border: "4px solid #D9D9D9",
-                          borderRadius: "50%",
-                          width: "50px", // Circle size
-                          height: "50px",
                           justifyContent: "center",
+                          position: "relative",
                         }}
                       >
-                        <Typography variant="body2" color="textPrimary"
+                       {/* Circular Progress */}
+                       <CircularProgress
+                         variant="determinate"
+                         value={(bill.AmountPaid / bill.TotalPayable) * 100} // Set progress value based on percentage
+                         size={60} // Set the size of the circular progress
+                         thickness={4} // Adjust thickness of the progress bar
+                         sx={{ color: '#D9D9D9'}}
+                       />
+                       {/* Display the amount paid */}
+                       <Typography variant="body2"
                           sx={{
                             fontWeight: "bold",
                             fontSize: "14px",
-                            p: "4px 2px 0px 2px",
+                            position: "absolute",
+                            top: "30%",
                           }}
                         >
                           ₹{bill.AmountPaid}
-                        </Typography>
-                        <Typography variant="body2" color="textPrimary" sx={{ fontSize: "14px" }}>Paid</Typography>
+                       </Typography>
+                       {/* Display the label 'Paid' */}
+                       <Typography
+                          variant="body2"
+                          sx={{
+                            fontSize: "12px",
+                            position: "absolute",
+                            bottom: "16%",
+                          }}
+                        >
+                          Paid
+                       </Typography>
                       </Box>
                     </Box>
                   </Box>

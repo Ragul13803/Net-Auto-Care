@@ -1,6 +1,6 @@
 // src/components/leftMenuBar.js
 import { useNavigate, useLocation } from "react-router-dom";
-import { Box, Drawer, List, ListItem, ListItemText, IconButton, Typography, Divider, Dialog, DialogTitle, DialogContent, DialogActions, Button, } from "@mui/material";
+import { Box, Drawer, List, ListItem, ListItemText, IconButton, Typography, Divider, Dialog, DialogTitle, DialogContent, DialogActions, Button } from "@mui/material";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import SettingsIcon from "@mui/icons-material/Settings";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
@@ -44,10 +44,13 @@ const LeftMenuBar = () => {
     setDialogOpen(false);
   };
 
+  // Check if the current path is under the /dashboard route
+  const isDashboardActive = location.pathname.startsWith('/dashboard');
+
   return (
     <>
       <Box sx={{ display: "flex" }}>
-        <Drawer
+        <Drawer variant="persistent" anchor="left" open={true}
           sx={{
             width: drawerWidth,
             flexShrink: 0,
@@ -56,9 +59,6 @@ const LeftMenuBar = () => {
               boxSizing: "border-box",
             },
           }}
-          variant="persistent"
-          anchor="left"
-          open={true}
         >
           <Box
             sx={{
@@ -72,8 +72,7 @@ const LeftMenuBar = () => {
                 <Box sx={{ padding: "4px", borderRadius: "50%" }}>
                   <img src={NetAutoCare} alt="logo" height={30} width={30} />
                 </Box>
-                <Typography
-                  variant="h6"
+                <Typography variant="h6"
                   sx={{
                     overflow: "hidden",
                     whiteSpace: "nowrap",
@@ -84,22 +83,18 @@ const LeftMenuBar = () => {
                 </Typography>
               </>
             )}
-            <IconButton
-              onClick={handleToggleSidebar}
-              sx={{ "&:focus": { outline: "none" } }}
-            >
+            <IconButton onClick={handleToggleSidebar} sx={{ "&:focus": { outline: "none" } }}>
               <MenuOpenIcon />
             </IconButton>
           </Box>
           <Divider />
           <List>
             {drawerItems.map((item, index) => {
-              const isActive = location.pathname === item.route;
+              // Check if the current route is active
+              const isActive = location.pathname === item.route || (item.route === "/dashboard" && isDashboardActive);
 
               return (
-                <ListItem
-                  key={index}
-                  onClick={() => handleNavigation(item.route)}
+                <ListItem key={index} onClick={() => handleNavigation(item.route)}
                   sx={{
                     cursor: "pointer",
                     bgcolor: isActive ? "#5744E3" : "transparent",
@@ -107,9 +102,7 @@ const LeftMenuBar = () => {
                     borderRadius: '10px',
                   }}
                 >
-                  <Box
-                    sx={{ display: "flex", alignItems: "center", gap: expanded ? "8px" : 0 }}
-                  >
+                  <Box sx={{ display: "flex", alignItems: "center", gap: expanded ? "8px" : 0 }}>
                     {item.icon}
                     {expanded && <ListItemText primary={item.text} />}
                   </Box>
@@ -119,7 +112,7 @@ const LeftMenuBar = () => {
           </List>
         </Drawer>
       </Box>
-      <Dialog open={DialogOpen} onClose={handleLogoutCancel} sx={{ borderRadius: '10px'}}>
+      <Dialog open={DialogOpen} onClose={handleLogoutCancel} sx={{ borderRadius: '10px' }}>
         <DialogTitle sx={{ fontWeight: 'bold' }}>Confirm Logout</DialogTitle>
         <DialogContent sx={{ padding: '14px 30px' }}>
           <Typography>Are you sure you want to logout?</Typography>

@@ -48,7 +48,7 @@ export const RecentlyAddedBills = () => {
   
     if (loading) {
       return (
-        <Box sx={{ display: "flex", justifyContent: "center", alignItems: 'center', height: "100vh", width: "100vw",}}>
+        <Box sx={{ display: "flex", justifyContent: "center", alignItems: 'center', width: '76vw', mt:"60px" }}>
           <CircularProgress size={30} sx={{ color: "#60B5FF", mr: "10px" }} />
           <Typography variant="h5">Loading...</Typography>
         </Box>
@@ -66,11 +66,11 @@ export const RecentlyAddedBills = () => {
 
   
   return (
-    <Box sx={{ height: "100vh", width: '100vw'}}>
+    <Box sx={{ }}>
       {bills.length === 0 ? (
         <Typography>No Recently Added bills found.</Typography>
       ) : (
-    <Grid container spacing={2} >
+    <Grid container spacing={2}>
       {bills.map((bill) => (
        <Card onClick={() => handleClick(bill.ID)} key={bill.ID}
        sx={{
@@ -80,8 +80,7 @@ export const RecentlyAddedBills = () => {
            boxShadow: '0 8px 16px rgba(0, 0, 0, 0.2)',
          },
          bgcolor: '#60B5FF',
-         width: '100%',
-         maxWidth: '260px',
+         width: '220px',
          transition: 'box-shadow 0.3s ease-in-out',
          cursor: 'pointer',
        }}

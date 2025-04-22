@@ -5,22 +5,23 @@ import LeftMenuBar from './leftMenuBar';
 
 const Layout = () => {
   return (
-    <Box sx={{ display: 'flex', position: 'absolute', top: 0 }}>
+    <Box sx={{ display: 'flex', position: 'relative', minHeight: '100vh' }}>
       {/* Left Sidebar */}
       <LeftMenuBar />
-      
+
       {/* Main Content Area */}
       <Box
         component="main"
         sx={{
-          flexGrow: 1, // Take remaining space
+          flexGrow: 1, // Take remaining space after sidebar
           bgcolor: 'background.default',
           display: 'flex',
-          justifyContent: 'flex-start',
           flexDirection: 'column',
           transition: 'margin-left 0.3s ease', // Smooth transition for margin change
+          height: '100vh',
         }}
       >
+        {/* Nested route content */}
         <Outlet />
       </Box>
     </Box>
