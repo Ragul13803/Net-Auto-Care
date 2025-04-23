@@ -2,10 +2,11 @@
   import { Box, Button, Card, Typography } from "@mui/material";
   import { useState } from "react";
   import { useNavigate, useLocation } from "react-router-dom";
-  import axios from "axios";
+  // import axios from "axios";
   import { ToastContainer, toast } from "react-toastify";
   import background from "../assets/bgIMG.png";
   import { MuiOtpInput } from "mui-one-time-password-input";
+import api from "../components/api";
 
   const OtpVerificationPage = () => {
     const navigate = useNavigate();
@@ -31,7 +32,7 @@
       }
     
       try {
-        const response = await axios.post("/verifyOtp", { email, otp });
+        const response = await api.post("/verifyOtp", { email, otp });
     
         // If API responds with status 200 but contains an error message
         if (response.data?.error) {

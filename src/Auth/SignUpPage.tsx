@@ -4,10 +4,11 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import axios from 'axios';
+// import axios from 'axios';
 import { FormField } from '../components/common/formField';
 import { ToastContainer, toast } from 'react-toastify';
 import background from '../assets/bgIMG.png';
+import api from '../components/api';
 
 const SignUpPage = () => {
   const navigate = useNavigate();
@@ -24,7 +25,7 @@ const SignUpPage = () => {
     }),
     onSubmit: async (values) => {
       try {
-        const response = await axios.post('/register', { name: values.name, mobile: values.mobile, email: values.email, password: values.password });
+        const response = await api.post('/register', { name: values.name, mobile: values.mobile, email: values.email, password: values.password });
         
         if (response?.status === 200) {
           toast.success('Registration successful! Please check your email for OTP.');

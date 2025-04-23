@@ -1,7 +1,8 @@
 import { useLocation } from 'react-router-dom';
 import { Box, Typography, Divider, CircularProgress, Card, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
-import axios from 'axios';
+// import axios from 'axios';
 import { useEffect, useState } from 'react';
+import api from '../api';
 
 const DetailsViewBill = () => {
   const [bill, setBill] = useState<any>(null);
@@ -19,7 +20,7 @@ const DetailsViewBill = () => {
         return;
       }
 
-      const response = await axios.get(`/getBillById/${id}`, {
+      const response = await api.get(`/getBillById/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -95,7 +96,7 @@ const DetailsViewBill = () => {
               <TableHead>
                 <TableRow>
                   <TableCell sx={{ textAlign: 'center', fontWeight: 'bold', borderRight: '1px solid #ccc'}}>S.No</TableCell>
-                  <TableCell sx={{ textAlign: 'center', fontWeight: 'bold', borderRight: '1px solid #ccc'}}>Item Name</TableCell>
+                  <TableCell sx={{ textAlign: 'left', fontWeight: 'bold', borderRight: '1px solid #ccc'}}>Item Name</TableCell>
                   <TableCell sx={{ textAlign: 'center', fontWeight: 'bold', borderRight: '1px solid #ccc'}}>Quantity</TableCell>
                   <TableCell sx={{ textAlign: 'center', fontWeight: 'bold', }}>Amount</TableCell>
                 </TableRow>
@@ -104,7 +105,7 @@ const DetailsViewBill = () => {
                 {bill.spare_items.map((item: any, index: number) => (
                   <TableRow key={item.ID || index}>
                     <TableCell sx={{ textAlign: 'center', borderRight: '1px solid #ccc', borderBottom: index === bill.spare_items.length - 1 ? 'none' : '1px solid #ccc',}}>{index + 1}</TableCell>
-                    <TableCell sx={{ textAlign: 'center', borderRight: '1px solid #ccc', borderBottom: index === bill.spare_items.length - 1 ? 'none' : '1px solid #ccc',}}>{item.spare_item}</TableCell>
+                    <TableCell sx={{ textAlign: 'left', borderRight: '1px solid #ccc', borderBottom: index === bill.spare_items.length - 1 ? 'none' : '1px solid #ccc',}}>{item.spare_item}</TableCell>
                     <TableCell sx={{ textAlign: 'center', borderRight: '1px solid #ccc', borderBottom: index === bill.spare_items.length - 1 ? 'none' : '1px solid #ccc',}}>{item.quantity}</TableCell>
                     <TableCell sx={{ textAlign: 'center', borderBottom: index === bill.spare_items.length - 1 ? 'none' : '1px solid #ccc',}}>₹{item.amount}</TableCell>
                   </TableRow>

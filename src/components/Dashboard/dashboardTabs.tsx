@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Box, Tabs, Tab, TextField, InputAdornment } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { RecentlyAddedBills } from './recentlyAddedBills';
+import { RecentlBills } from './recentlyBills';
 import CompletedBills from './completedBills';
 import PendingBills from './pendingBills';
 
@@ -75,7 +75,7 @@ export default function DashboardTabs() {
           <Tab label="Pending" id="tab-1" sx={{ textTransform: 'none' }} />
           <Tab label="Completed" id="tab-2" sx={{ textTransform: 'none' }} />
         </Tabs>
-        <TabPanel value={value} index={0}><RecentlyAddedBills /></TabPanel>
+        <TabPanel value={value} index={0}><RecentlBills /></TabPanel>
         <TabPanel value={value} index={1}><PendingBills /></TabPanel>
         <TabPanel value={value} index={2}><CompletedBills /></TabPanel>
       </Box>

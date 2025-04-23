@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
+// import axios from "axios";
 import { Box, Card, CardContent, Typography, Grid, CircularProgress, } from "@mui/material";
 import AccountBalanceWalletRoundedIcon from "@mui/icons-material/AccountBalanceWalletRounded";
 import CalendarTodayRoundedIcon from "@mui/icons-material/CalendarTodayRounded";
 import { useNavigate } from 'react-router-dom';
+import api from "../api";
 
 const CompletedBills = () => {
   const [bills, setBills] = useState<any[]>([]); // Ensure initial state is an empty array
@@ -20,7 +21,7 @@ const CompletedBills = () => {
         return;
       }
 
-      const response = await axios.get("/getBillsByStatus/Completed", {
+      const response = await api.get("/getBillsByStatus/Completed", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -47,7 +48,7 @@ const CompletedBills = () => {
   if (loading) {
     return (
       <Box sx={{ display: "flex", justifyContent: "center", alignItems: 'center', width: '76vw', mt:"60px" }}>
-        <CircularProgress size={30} sx={{ color: "#3F7D58", mr: "10px" }} />
+        <CircularProgress size={30} sx={{ color: "#47aa65", mr: "10px" }} />
         <Typography variant="h5">Loading...</Typography>
       </Box>
     );
@@ -74,7 +75,7 @@ const CompletedBills = () => {
                   "&:hover": {
                     boxShadow: "0 8px 16px rgba(0, 0, 0, 0.2)",
                   },
-                  bgcolor: "#3F7D58",
+                  bgcolor: "#47aa65",
                   width: '220px',
                   transition: "box-shadow 0.3s ease-in-out",
                   cursor: 'pointer',

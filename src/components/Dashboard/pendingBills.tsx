@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
+// import axios from "axios";
 import { Box, Card, CardContent, Typography, Grid, CircularProgress, } from "@mui/material";
 import AccountBalanceWalletRoundedIcon from "@mui/icons-material/AccountBalanceWalletRounded";
 import CalendarTodayRoundedIcon from "@mui/icons-material/CalendarTodayRounded";
 import { useNavigate } from "react-router-dom";
+import api from "../api";
 
 const PendingBills = () => {
   const [bills, setBills] = useState<any[]>([]);
@@ -20,7 +21,7 @@ const PendingBills = () => {
         return;
       }
 
-      const response = await axios.get("/getBillsByStatus/Pending", {
+      const response = await api.get("/getBillsByStatus/Pending", {
         headers: {
           Authorization: `Bearer ${token}`,
         },

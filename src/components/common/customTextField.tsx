@@ -10,6 +10,7 @@ interface CustomTextFieldProps {
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   onBlur?: (event: React.FocusEvent<HTMLInputElement>) => void;
   type?: string;
+  disabled: boolean
 }
 
 const CustomTextField: React.FC<CustomTextFieldProps> = ({
@@ -19,6 +20,7 @@ const CustomTextField: React.FC<CustomTextFieldProps> = ({
   name,
   onBlur,
   type = "text",
+  disabled
 }) => {
   const [showPassword, setShowPassword] = useState(false);
 
@@ -33,6 +35,7 @@ const CustomTextField: React.FC<CustomTextFieldProps> = ({
     <TextField
       placeholder={placeholder}
       value={value}
+      disabled={disabled}
       onChange={onChange}
       onBlur={onBlur}
       name={name}
@@ -48,7 +51,7 @@ const CustomTextField: React.FC<CustomTextFieldProps> = ({
               edge="end"
               size="small"
             >
-              {showPassword ? <VisibilityOff fontSize="small" /> : <Visibility fontSize="small" />}
+              {showPassword ? <Visibility fontSize="small" /> : <VisibilityOff fontSize="small" />}
             </IconButton>
           </InputAdornment>
         ),

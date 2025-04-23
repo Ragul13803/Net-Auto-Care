@@ -11,8 +11,8 @@ export const FormField = ({ label, name, type = 'text', formik }: any) => (
       value={formik.values[name]}
       onChange={formik.handleChange}
       onBlur={formik.handleBlur}
-      type={type}
-    />
+      type={type} 
+      disabled={false}    />
     {formik.touched[name] && formik.errors[name] && (
       <Typography variant="caption" sx={{ color: 'red', mt: 0.5, textAlign: 'left', alignSelf: 'flex-start' }}>
         * {formik.errors[name]}

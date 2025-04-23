@@ -1,13 +1,16 @@
 // src/router/AppRouter.tsx
 import { Routes, Route, Navigate } from 'react-router-dom';
 import Layout from '../components/layout';
-import Settings from '../components/settings';
+// import Settings from '../components/account';
 import SignUpPage from '../Auth/SignUpPage';
 import LoginPage from '../Auth/loginPage';
 import OtpVerificationPage from '../Auth/otpVerificationPage';
 import NotFound from '../pages/notFound';
 import DashboardTabs from '../components/Dashboard/dashboardTabs';
 import DetailsViewBill from '../components/common/detailsViewBill';
+import ForgotPassword from '../Auth/forgotPassword';
+import Account from '../components/account';
+import Print from '../components/common/print';
 
 const AppRouter = () => {
   return (
@@ -21,6 +24,7 @@ const AppRouter = () => {
       
       {/* OTP verification route */}
       <Route path="/otp-verify" element={<OtpVerificationPage />} />
+      <Route path="/forgot-password" element={<ForgotPassword />} />
 
       {/* Routes with layout */}
       <Route element={<Layout />}>
@@ -28,11 +32,14 @@ const AppRouter = () => {
       <Route path="/dashboard/recent" element={<DashboardTabs />} />
       <Route path="/dashboard/pending" element={<DashboardTabs />} />
       <Route path="/dashboard/completed" element={<DashboardTabs />} />
-      <Route path="/settings" element={<Settings />} />
+      <Route path="/account" element={<Account />} />
 
       <Route path="/dashboard/recent-detail" element={<DetailsViewBill />} />
       <Route path="/dashboard/pending-detail" element={<DetailsViewBill />} />
       <Route path="/dashboard/completed-detail" element={<DetailsViewBill />} />
+      
+      {/* Route for Print */}
+      <Route path="/print" element={<Print />} />
 
     </Route>
 

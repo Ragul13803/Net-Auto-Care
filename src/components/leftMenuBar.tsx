@@ -1,24 +1,31 @@
 // src/components/leftMenuBar.js
 import { useNavigate, useLocation } from "react-router-dom";
-import { Box, Drawer, List, ListItem, ListItemText, IconButton, Typography, Divider, Dialog, DialogTitle, DialogContent, DialogActions, Button } from "@mui/material";
+import { Box, Drawer, List, ListItem, ListItemText, IconButton, Typography, Divider, Dialog, DialogTitle, DialogContent, DialogActions, Button, CircularProgress } from "@mui/material";
 import DashboardIcon from "@mui/icons-material/Dashboard";
-import SettingsIcon from "@mui/icons-material/Settings";
+import PrintIcon from '@mui/icons-material/Print';
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import NetAutoCare from "../assets/Net Auto Care.png";
 import MenuOpenIcon from "@mui/icons-material/MenuOpen";
 import { useState } from "react";
+// import axios from "axios";
+import { ToastContainer, toast } from 'react-toastify';
+import AccountBoxIcon from '@mui/icons-material/AccountBox';
+import api from "./api";
 
 const drawerItems = [
   { text: "Dashboard", icon: <DashboardIcon />, route: "/dashboard" },
-  { text: "Settings", icon: <SettingsIcon />, route: "/settings" },
+  { text: "Account", icon: <AccountBoxIcon />, route: "/account" },
   { text: "Logout", icon: <ExitToAppIcon />, route: "/login" },
+  { text: "Print", icon: <PrintIcon />, route: "/print" },
 ];
 
 const LeftMenuBar = () => {
   const navigate = useNavigate();
   const [expanded, setExpanded] = useState(true); // Sidebar state (expanded or minimized)
+  const [logoutLoading, setLogoutLoading] = useState(false);
   const location = useLocation(); // Get current route
   const [DialogOpen, setDialogOpen] = useState(false);
+  const token = sessionStorage.getItem("access_token");
 
   const drawerWidth = expanded ? 220 : 50;
 
@@ -34,10 +41,29 @@ const LeftMenuBar = () => {
     }
   };
 
-  const handleLogoutConfirm = () => {
-    sessionStorage.clear(); // Or localStorage.clear(), depending on your app
-    setDialogOpen(false);
-    navigate("/login");
+  const handleLogoutConfirm = async () => {
+    setLogoutLoading(true);
+    try {
+      if (!token) {
+        alert("No access token found. Please log in.");
+        return;
+      }
+  
+      const response = await api.post('/logout', {}, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+  
+      sessionStorage.clear();
+      toast.success(response.data.message);
+    } catch (e: any) {
+      alert(e.message || "Failed to log out");
+    } finally {
+      setLogoutLoading(false);
+      setDialogOpen(false);
+      navigate("/login");
+    }
   };
 
   const handleLogoutCancel = () => {
@@ -111,13 +137,24 @@ const LeftMenuBar = () => {
             })}
           </List>
         </Drawer>
+        <ToastContainer />
       </Box>
-      <Dialog open={DialogOpen} onClose={handleLogoutCancel} sx={{ borderRadius: '10px' }}>
+      <Dialog open={DialogOpen} onClose={handleLogoutCancel} PaperProps={{
+        sx: {
+          width: '300px', // set your fixed width here
+          borderRadius: '10px',
+        },
+      }}>
         <DialogTitle sx={{ fontWeight: 'bold' }}>Confirm Logout</DialogTitle>
-        <DialogContent sx={{ padding: '14px 30px' }}>
-          <Typography>Are you sure you want to logout?</Typography>
+        <DialogContent sx={{ padding: '14px 30px', }}>
+          { logoutLoading? 
+          <Box sx={{ display: "flex", justifyContent: "center", alignItems: 'center', }}>
+          <CircularProgress size={30} sx={{ color: "#5744E3", mr: "10px" }} />
+          <Typography variant="h6">Logging out...</Typography>
+        </Box> :
+        <Typography>Are you sure you want to logout?</Typography> }
         </DialogContent>
-        <DialogActions>
+        <DialogActions sx={{ gap: '4px'}}>
           <Button onClick={handleLogoutCancel} variant="outlined"
             sx={{
               textTransform: "none",

@@ -8,6 +8,7 @@ import { FormField } from '../components/common/formField';
 import { ToastContainer, toast } from 'react-toastify';
 import background from '../assets/bgIMG.png';
 import google from '../assets/google-logo.png';
+import api from '../components/api';
 
 const LoginPage = () => {
   const navigate = useNavigate(); // Use the navigate hook from react-router-dom
@@ -21,7 +22,7 @@ const LoginPage = () => {
     }),
     onSubmit: async (values) => {
       try {
-        const response = await axios.post('/login', {
+        const response = await api.post('/login', {
           email: values.email,
           password: values.password,
         });
@@ -46,11 +47,10 @@ const LoginPage = () => {
             const errorMessage = err.response?.data?.message || 'An error occurred during login.';
             console.log('Axios Error Response:', err.response);
             console.log('err.response.data.message:', err.response.data.message);
-            toast.error(errorMessage, {
-              onClose: () => {
-                navigate(`/otp-verify?email=${encodeURIComponent(values.email)}`);
-              },
-            });
+            toast.error(errorMessage);
+            setTimeout(() => {
+              navigate(`/otp-verify?email=${encodeURIComponent(values.email)}`);
+            }, 2000); 
           } else {
             console.error('Error without response:', err.message);
             toast.error('An unexpected error occurred. Please try again later.');
