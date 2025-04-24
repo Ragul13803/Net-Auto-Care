@@ -5,7 +5,7 @@ export default defineConfig({
     proxy: {
       // Login route
       '/login': {
-        target: 'https://netautocare.whyceeyes.com',  // Your backend API base URL
+        target: 'https://cors-anywhere.herokuapp.com/https://netautocare.whyceeyes.com',  // Your backend API base URL
         changeOrigin: true,
         secure: false, // Set to true if your API uses HTTPS (use false for HTTP)
       },
