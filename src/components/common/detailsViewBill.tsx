@@ -1,5 +1,5 @@
 import { useLocation } from 'react-router-dom';
-import { Box, Typography, Divider, CircularProgress, Card, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Button, Paper } from '@mui/material';
+import { Box, Typography, Divider, CircularProgress, Card, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Button } from '@mui/material';
 import PrintIcon from '@mui/icons-material/Print';
 import { useEffect, useRef, useState } from 'react';
 import api from '../api';
