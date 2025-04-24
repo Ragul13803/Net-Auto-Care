@@ -50,8 +50,9 @@ const CustomTextField: React.FC<CustomTextFieldProps> = ({
               onClick={togglePasswordVisibility}
               edge="end"
               size="small"
+              sx={{ '&:focus': { outline: 'none' } }}
             >
-              {showPassword ? <Visibility fontSize="small" /> : <VisibilityOff fontSize="small" />}
+              {showPassword ? <Visibility fontSize="small" sx={{ '&:focus':{ outline: 'none'}}}/> : <VisibilityOff fontSize="small" />}
             </IconButton>
           </InputAdornment>
         ),

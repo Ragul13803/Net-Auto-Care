@@ -1,7 +1,6 @@
 // src/router/AppRouter.tsx
 import { Routes, Route, Navigate } from 'react-router-dom';
 import Layout from '../components/layout';
-// import Settings from '../components/account';
 import SignUpPage from '../Auth/SignUpPage';
 import LoginPage from '../Auth/loginPage';
 import OtpVerificationPage from '../Auth/otpVerificationPage';
@@ -10,7 +9,6 @@ import DashboardTabs from '../components/Dashboard/dashboardTabs';
 import DetailsViewBill from '../components/common/detailsViewBill';
 import ForgotPassword from '../Auth/forgotPassword';
 import Account from '../components/account';
-import Print from '../components/common/print';
 
 const AppRouter = () => {
   return (
@@ -38,9 +36,6 @@ const AppRouter = () => {
       <Route path="/dashboard/pending-detail" element={<DetailsViewBill />} />
       <Route path="/dashboard/completed-detail" element={<DetailsViewBill />} />
       
-      {/* Route for Print */}
-      <Route path="/print" element={<Print />} />
-
     </Route>
 
       {/* 404 page */}

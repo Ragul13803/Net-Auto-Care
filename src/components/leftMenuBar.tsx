@@ -2,7 +2,6 @@
 import { useNavigate, useLocation } from "react-router-dom";
 import { Box, Drawer, List, ListItem, ListItemText, IconButton, Typography, Divider, Dialog, DialogTitle, DialogContent, DialogActions, Button, CircularProgress } from "@mui/material";
 import DashboardIcon from "@mui/icons-material/Dashboard";
-import PrintIcon from '@mui/icons-material/Print';
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import NetAutoCare from "../assets/Net Auto Care.png";
 import MenuOpenIcon from "@mui/icons-material/MenuOpen";
@@ -16,7 +15,6 @@ const drawerItems = [
   { text: "Dashboard", icon: <DashboardIcon />, route: "/dashboard" },
   { text: "Account", icon: <AccountBoxIcon />, route: "/account" },
   { text: "Logout", icon: <ExitToAppIcon />, route: "/login" },
-  { text: "Print", icon: <PrintIcon />, route: "/print" },
 ];
 
 const LeftMenuBar = () => {
@@ -114,7 +112,7 @@ const LeftMenuBar = () => {
             </IconButton>
           </Box>
           <Divider />
-          <List>
+          <List sx={{ p: '0 6px', mt: '10px' }}>
             {drawerItems.map((item, index) => {
               // Check if the current route is active
               const isActive = location.pathname === item.route || (item.route === "/dashboard" && isDashboardActive);
@@ -126,6 +124,7 @@ const LeftMenuBar = () => {
                     bgcolor: isActive ? "#5744E3" : "transparent",
                     color: isActive ? "white" : "inherit",
                     borderRadius: '10px',
+                    pl: expanded ? '10px' : '7px'
                   }}
                 >
                   <Box sx={{ display: "flex", alignItems: "center", gap: expanded ? "8px" : 0 }}>
